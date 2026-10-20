@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>READY Talk · Carolina Community Academy</title>
+<meta name="description" content="READY Talk: one simple conversation idea each week for families at Carolina Community Academy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+:root{
+  --blue:#4B9CD3; --navy:#13294B; --marigold:#F5A623; --band:#A9CCEC; --sky:#E8F2FA;
+  --cream:#FFF3DC; --ink:#13294B; --muted:#4d5b70; --line:#DCE9F6; --paper:#FFFFFF;
+  --display:"Poppins",Arial,sans-serif; --body:"Source Sans 3","Open Sans",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:520px;margin:0 auto;padding:0 0 48px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.15;color:var(--navy)}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)}
+.mark{font:700 16px var(--display);color:var(--navy)}
+.mark span{color:var(--blue)}
+.lang{font:600 15px var(--display);color:var(--navy);background:none;border:2px solid var(--navy);border-radius:999px;padding:0 16px;min-height:44px;cursor:pointer}
+
+.hero{background:var(--navy);padding:26px 20px 30px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font:500 12px var(--display);letter-spacing:2px;text-transform:uppercase;color:var(--band)}
+.hero h1{color:#fff;font-size:30px}
+.hero p{font-size:18px;color:var(--sky)}
+
+.card{margin:-14px 16px 0;background:#fff;border:3px solid var(--band);border-radius:18px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px}
+.head{display:flex;align-items:center;gap:14px}
+.circle{flex:none;width:64px;height:64px;border-radius:50%;background:var(--marigold);color:#fff;font:700 40px/1 var(--display);display:grid;place-items:center}
+.head .eyebrow{color:var(--muted)}
+.head h2{font-size:22px}
+.label{font:700 16px var(--display);color:var(--navy);margin-top:2px}
+.prompt{display:flex;gap:10px;align-items:flex-start;background:var(--sky);border-radius:12px;padding:12px 14px;font:600 16px/1.4 var(--display);color:var(--navy)}
+.prompt::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--marigold);margin-top:7px}
+.own{border:2px dashed var(--blue);border-radius:12px;padding:12px 14px;font:600 16px/1.6 var(--display);color:var(--navy)}
+.own mark{background:var(--cream);color:inherit;border-radius:6px;padding:1px 6px}
+.note{font-size:15px;color:var(--muted)}
+
+section.plain{padding:22px 20px 0;display:flex;flex-direction:column;gap:12px}
+section.plain h2{font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{background:var(--sky);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.tile b{font:600 15px var(--display);color:var(--navy)}
+.tile span{font-size:14px;color:var(--muted)}
+
+.share{margin:24px 16px 0;background:var(--navy);border-radius:18px;padding:24px 20px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
+.share h2{color:#fff;font-size:22px}
+.share p{color:var(--sky);font-size:16px}
+.btn{display:block;width:100%;text-decoration:none;background:var(--marigold);color:var(--navy);font:700 18px var(--display);padding:16px;border-radius:999px;text-align:center;min-height:44px}
+.btn[aria-disabled="true"]{background:#8b97a8;color:#fff;cursor:default}
+.share .note{color:var(--band);font-size:14px}
+
+.list{display:flex;flex-direction:column;gap:6px}
+.row{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:10px}
+.row .L{font:700 22px var(--display);color:var(--blue);width:26px;text-align:center}
+.row .W{flex:1;font-size:16px}
+.row .D{font-size:13px;color:var(--muted)}
+.row.now{background:var(--cream)}
+.row.now .L{color:var(--marigold)}
+.row.now .W{font-weight:600}
+
+footer{margin:24px 20px 0;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px;text-align:center;font-size:14px;color:var(--muted)}
+footer b{font:600 15px var(--display);color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="mark"><span>READY</span> TALK</div>
+    <button type="button" class="lang" id="lang-btn"></button>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow" id="h-eyebrow"></div>
+    <h1 id="h-title"></h1>
+    <p id="h-sub"></p>
+  </header>
+
+  <section class="card" aria-live="polite">
+    <div class="head">
+      <div class="circle" id="c-letter" aria-hidden="true"></div>
+      <div>
+        <div class="eyebrow" id="c-eyebrow"></div>
+        <h2 id="c-title"></h2>
+      </div>
+    </div>
+    <p id="c-desc"></p>
+    <div class="label" id="c-label"></div>
+    <ul id="c-prompts" style="display:flex;flex-direction:column;gap:10px"></ul>
+    <div id="c-own-wrap" style="display:flex;flex-direction:column;gap:10px">
+      <div class="label" id="c-own-label"></div>
+      <div class="own" id="c-own"></div>
+      <p class="note" id="c-own-note"></p>
+    </div>
+  </section>
+
+  <section class="plain">
+    <h2 data-t="whenH"></h2>
+    <div class="grid" id="tiles"></div>
+  </section>
+
+  <section class="share">
+    <h2 data-t="shareH"></h2>
+    <p data-t="shareP"></p>
+    <a class="btn" id="share-btn" target="_blank" rel="noopener"></a>
+    <p class="note" data-t="shareNote"></p>
+  </section>
+
+  <section class="plain">
+    <h2 data-t="whyH"></h2>
+    <p data-t="whyP"></p>
+    <p class="note" data-t="whyCredit"></p>
+  </section>
+
+  <section class="plain">
+    <h2 data-t="comingH"></h2>
+    <p class="note" data-t="comingP"></p>
+    <div class="list" id="coming"></div>
+  </section>
+
+  <footer>
+    <b data-t="tagline"></b>
+    <div data-t="footer"></div>
+  </footer>
+</div>
+
+<script>
+// ===== Edit these =====
+// Microsoft Form links. Leave "" until the form is ready; the button then says "Form coming soon".
+const FORM_URL = { en: "https://forms.cloud.microsoft/r/qv8aMuxuiT", es: "https://forms.cloud.microsoft/r/qv8aMuxuiT" };
+
+// Which letter is on the sign right now. Change this when the sign changes: "R", "E", "A", "D" or "Y".
+const CURRENT = "R";
+// ======================
+
+const ORDER = ["R", "E", "A", "D", "Y"];
+
+const T = {
+  en: {
+    langBtn: "Español",
+    week: "Week {n} of 5 · Carolina Community Academy",
+    heroSub: "It takes a couple of minutes. Here's how.",
+    focus: "This week's focus",
+    tryLabel: "Try saying…",
+    rememberLabel: "Remember…",
+    whenH: "When to try it",
+    tiles: [["In the car", "Instead of “How was school?”"], ["At dinner", "Everyone takes a turn"], ["At bedtime", "Or in the bath"], ["In any language", "Whatever you speak at home"]],
+    shareH: "Tell us what you talked about",
+    shareP: "A sentence or two is plenty.",
+    shareBtn: "Share your conversation",
+    shareSoon: "Form coming soon",
+    shareNote: "About 1 minute. No full names, please.",
+    whyH: "Why this matters",
+    whyP: "Talking about things that aren't happening right now, like yesterday or next week, is linked to children's vocabulary and later reading. You don't need special materials. These are conversations most families already have.",
+    whyCredit: "Developed with the UNC Early Learning Lab.",
+    comingH: "Coming up",
+    comingP: "One focus at a time. Look for the letter on the sign at carline.",
+    thisWeek: "This week",
+    tagline: "Everyday talk gets kids READY.",
+    footer: "Carolina Community Academy and the UNC Early Learning Lab. Questions? Ask your child's teacher.",
+    months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    L: {
+      R: { w: "Recall Past Events", short: "Recall past events",
+           hero: "This week, ask your child about something that already happened.",
+           d: "Talk about things that already happened. Then give your child time to answer.",
+           kind: "try",
+           t: ["What made you laugh the hardest today?", "Grandma said you went to the creek. What did you find there?"],
+           ownLabel: "Or ask about something from your child's week",
+           own: "“<mark>Your teacher</mark> said you <mark>had a fire drill</mark>. What happened?”",
+           ownNote: "Fill in anyone and anything. The bus, church, a cousin's visit, what was for lunch. Any event your child was part of works." },
+      E: { w: "Explain Words and Ideas", short: "Explain words and ideas",
+           hero: "This week, explain a new word or how something works.",
+           d: "Explain new words and how things work.",
+           kind: "try",
+           t: ["That word ‘enormous’ means really big. What’s something enormous?", "The puddle dried up. That’s called ‘evaporating.’ Where did the water go?"],
+           ownLabel: "Or use a word from your own day",
+           own: "“That word ‘<mark>sour</mark>’ means <mark>it makes your mouth pucker</mark>. What’s something sour?”",
+           ownNote: "Any word that comes up at your house works. A word from a book, a sign, a recipe, the news." },
+      A: { w: "Ask Open-Ended Questions", short: "Ask open-ended questions",
+           hero: "This week, ask a question that can't be answered with yes or no.",
+           d: "Ask questions that get kids talking, not just yes or no.",
+           kind: "try",
+           t: ["How would you help a friend who was feeling left out?", "How can people help plants and animals where we live?"],
+           ownLabel: "Or ask about something going on at home",
+           own: "“What would you do if <mark>we had a snow day tomorrow</mark>?”",
+           ownNote: "Start with how, why, or what would you do. Those get more than yes or no." },
+      D: { w: "Discuss the Future", short: "Discuss the future",
+           hero: "This week, talk with your child about something coming up.",
+           d: "Talk about events that will happen in the near or distant future.",
+           kind: "try",
+           t: ["What do you think you’ll do at recess today?", "What would you like to be really good at by the end of this school year?"],
+           ownLabel: "Or talk about your own plans",
+           own: "“This weekend we're going to <mark>Tía's house</mark>. What do you think we'll do there?”",
+           ownNote: "Any plan works. Tomorrow's lunch, a trip, a birthday, what happens after the holiday." },
+      Y: { w: "You Can Make a Difference", short: "You can make a difference",
+           hero: "These two weeks, pick any READY idea and keep going.",
+           d: "The conversations you have with your child support their language and learning.",
+           kind: "remember",
+           t: ["There’s no “right” way to have these conversations. Follow what interests your child.", "Look for times you’re already together, such as in the car, at meals, or before bed."],
+           ownLabel: "Pick one",
+           own: "Ask about <mark>yesterday</mark>. Explain a <mark>word</mark>. Ask a <mark>how or why</mark> question. Talk about <mark>tomorrow</mark>.",
+           ownNote: "Any one of them counts. Doing it a few times a week adds up." }
+    }
+  },
+  es: {
+    langBtn: "English",
+    week: "Semana {n} de 5 · Carolina Community Academy",
+    heroSub: "Toma un par de minutos. Así se hace.",
+    focus: "El enfoque de esta semana",
+    tryLabel: "Intente decir…",
+    rememberLabel: "Recuerde…",
+    whenH: "Cuándo probarlo",
+    tiles: [["En el carro", "En vez de “¿Cómo te fue?”"], ["En la cena", "Cada quien toma su turno"], ["A la hora de dormir", "O en el baño"], ["En cualquier idioma", "El que hablan en casa"]],
+    shareH: "Cuéntenos de qué hablaron",
+    shareP: "Con una o dos frases basta.",
+    shareBtn: "Comparta su conversación",
+    shareSoon: "El formulario estará listo pronto",
+    shareNote: "Como 1 minuto. Sin nombres completos, por favor.",
+    whyH: "Por qué importa",
+    whyP: "Hablar de cosas que no están pasando ahora mismo, como el ayer o la próxima semana, está relacionado con el vocabulario de los niños y con la lectura más adelante. No necesita materiales especiales. Son conversaciones que la mayoría de las familias ya tienen.",
+    whyCredit: "Desarrollado con el Early Learning Lab de UNC.",
+    comingH: "Lo que viene",
+    comingP: "Un enfoque a la vez. Busque la letra en el letrero a la hora de recoger.",
+    thisWeek: "Esta semana",
+    tagline: "Las conversaciones de cada día preparan a los niños.",
+    footer: "Carolina Community Academy y el Early Learning Lab de UNC. ¿Preguntas? Hable con el maestro de su hijo.",
+    months: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
+    L: {
+      R: { w: "Recordar eventos pasados", short: "Recordar eventos pasados",
+           hero: "Esta semana, pregúntele a su hijo sobre algo que ya pasó.",
+           d: "Hablen de cosas que ya pasaron. Luego dele tiempo a su hijo para contestar.",
+           kind: "try",
+           t: ["¿Qué te hizo reír más hoy?", "La abuela dijo que fuiste al arroyo. ¿Qué encontraste allí?"],
+           ownLabel: "O pregunte sobre algo de la semana de su hijo",
+           own: "“<mark>Tu maestra</mark> dijo que <mark>hubo un simulacro de incendio</mark>. ¿Qué pasó?”",
+           ownNote: "Ponga a cualquier persona y cualquier cosa. El autobús, la iglesia, la visita de un primo, qué hubo de almuerzo. Cualquier evento en el que estuvo su hijo sirve." },
+      E: { w: "Explicar palabras e ideas", short: "Explicar palabras e ideas",
+           hero: "Esta semana, explique una palabra nueva o cómo funciona algo.",
+           d: "Explique palabras nuevas y cómo funcionan las cosas.",
+           kind: "try",
+           t: ["La palabra ‘enorme’ quiere decir muy grande. ¿Qué es algo enorme?", "El charco se secó. Eso se llama ‘evaporación’. ¿A dónde se fue el agua?"],
+           ownLabel: "O use una palabra de su propio día",
+           own: "“La palabra ‘<mark>agrio</mark>’ quiere decir <mark>que te hace fruncir la boca</mark>. ¿Qué es algo agrio?”",
+           ownNote: "Cualquier palabra que salga en su casa sirve. Una palabra de un libro, un letrero, una receta, las noticias." },
+      A: { w: "Hacer preguntas abiertas", short: "Hacer preguntas abiertas",
+           hero: "Esta semana, haga una pregunta que no se pueda contestar con sí o no.",
+           d: "Haga preguntas que hagan hablar a los niños, no solo contestar sí o no.",
+           kind: "try",
+           t: ["¿Cómo ayudarías a un amigo que se siente excluido?", "¿Cómo puede la gente ayudar a las plantas y los animales donde vivimos?"],
+           ownLabel: "O pregunte sobre algo que pasa en casa",
+           own: "“¿Qué harías si <mark>mañana no hubiera clases por la nieve</mark>?”",
+           ownNote: "Empiece con cómo, por qué, o qué harías. Esas preguntas sacan más que un sí o un no." },
+      D: { w: "Hablar del futuro", short: "Hablar del futuro",
+           hero: "Esta semana, hable con su hijo sobre algo que viene.",
+           d: "Hablen de cosas que van a pasar pronto o más adelante.",
+           kind: "try",
+           t: ["¿Qué crees que vas a hacer en el recreo hoy?", "¿En qué te gustaría ser muy bueno al final de este año escolar?"],
+           ownLabel: "O hable de sus propios planes",
+           own: "“Este fin de semana vamos a <mark>casa de la tía</mark>. ¿Qué crees que vamos a hacer allá?”",
+           ownNote: "Cualquier plan sirve. El almuerzo de mañana, un viaje, un cumpleaños, qué pasa después de las fiestas." },
+      Y: { w: "Usted puede hacer la diferencia", short: "Usted puede hacer la diferencia",
+           hero: "Estas dos semanas, escoja cualquier idea de READY y siga.",
+           d: "Las conversaciones que tiene con su hijo apoyan su lenguaje y aprendizaje.",
+           kind: "remember",
+           t: ["No hay una forma “correcta” de tener estas conversaciones. Siga lo que le interesa a su hijo.", "Busque momentos en que ya están juntos, como en el carro, en las comidas o antes de dormir."],
+           ownLabel: "Escoja una",
+           own: "Pregunte sobre <mark>ayer</mark>. Explique una <mark>palabra</mark>. Haga una pregunta de <mark>cómo o por qué</mark>. Hable de <mark>mañana</mark>.",
+           ownNote: "Cualquiera cuenta. Hacerlo unas cuantas veces por semana suma." }
+    }
+  }
+};
+
+function featured(){ const i=Math.max(0,ORDER.indexOf(CURRENT)); return {k:ORDER[i], n:i+1}; }
+function el(tag,text,cls){ const n=document.createElement(tag); if(text!=null) n.textContent=text; if(cls) n.className=cls; return n; }
+
+let lang="en";
+try { if (location.hash==="#es") lang="es"; } catch(e){}
+const feat=featured();
+
+function render(){
+  const t=T[lang], L=t.L[feat.k];
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-t]").forEach(n=>{ n.textContent=t[n.dataset.t]; });
+  document.getElementById("lang-btn").textContent=t.langBtn;
+
+  document.getElementById("h-eyebrow").textContent = t.week.replace("{n}",feat.n);
+  document.getElementById("h-title").textContent=L.hero;
+  document.getElementById("h-sub").textContent=t.heroSub;
+
+  document.getElementById("c-letter").textContent=feat.k;
+  document.getElementById("c-eyebrow").textContent=t.focus;
+  document.getElementById("c-title").textContent=L.w;
+  document.getElementById("c-desc").textContent=L.d;
+  document.getElementById("c-label").textContent = L.kind==="try" ? t.tryLabel : t.rememberLabel;
+  document.getElementById("c-prompts").replaceChildren(...L.t.map(s=>el("li", L.kind==="try" ? `“${s}”` : s, "prompt")));
+  document.getElementById("c-own-label").textContent=L.ownLabel;
+  document.getElementById("c-own").innerHTML=L.own; // trusted: content is defined in this file
+  document.getElementById("c-own-note").textContent=L.ownNote;
+
+  document.getElementById("tiles").replaceChildren(...t.tiles.map(([b,s])=>{ const d=el("div",null,"tile"); d.append(el("b",b),el("span",s)); return d; }));
+
+  const btn=document.getElementById("share-btn"); const url=FORM_URL[lang]||FORM_URL.en;
+  if (url){ btn.href=url; btn.textContent=t.shareBtn; btn.removeAttribute("aria-disabled"); }
+  else { btn.removeAttribute("href"); btn.textContent=t.shareSoon; btn.setAttribute("aria-disabled","true"); }
+
+  document.getElementById("coming").replaceChildren(...ORDER.map(k=>{
+    const r=el("div",null,"row"+(k===feat.k?" now":""));
+    r.append(el("div",k,"L"), el("div",t.L[k].short,"W"), el("div", k===feat.k ? t.thisWeek : "", "D"));
+    return r;
+  }));
+}
+
+document.getElementById("lang-btn").addEventListener("click",()=>{
+  lang = lang==="en" ? "es" : "en";
+  try { history.replaceState(null,"", lang==="es" ? "#es" : location.pathname); } catch(e){}
+  render(); window.scrollTo(0,0);
+});
+render();
+</script>
+</body>
+</html>
