@@ -60,7 +60,9 @@ section.plain h2{font-size:20px}
 .share .note{color:var(--band);font-size:14px}
 
 .list{display:flex;flex-direction:column;gap:6px}
-.row{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:10px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;min-height:44px;text-decoration:none;color:var(--ink)}
+a.row:hover{background:var(--sky)}
+.row .D::after{content:""}
 .row .L{font:700 22px var(--display);color:var(--blue);width:26px;text-align:center}
 .row .W{flex:1;font-size:16px}
 .row .D{font-size:13px;color:var(--muted)}
@@ -138,8 +140,10 @@ footer b{font:600 15px var(--display);color:var(--navy)}
 // Microsoft Form links. Leave "" until the form is ready; the button then says "Form coming soon".
 const FORM_URL = { en: "https://forms.cloud.microsoft/r/qv8aMuxuiT", es: "https://forms.cloud.microsoft/r/qv8aMuxuiT" };
 
-// Which letter is on the sign right now. Change this when the sign changes: "R", "E", "A", "D" or "Y".
+// Which letter this page shows. Each letter has its own file: index.html (R), e.html, a.html, d.html, y.html.
 const CURRENT = "R";
+// File name for each letter's page (used for the tappable list at the bottom).
+const PAGES = { R: "index.html", E: "e.html", A: "a.html", D: "d.html", Y: "y.html" };
 // ======================
 
 const ORDER = ["R", "E", "A", "D", "Y"];
@@ -162,9 +166,9 @@ const T = {
     whyH: "Why this matters",
     whyP: "Talking about things that aren't happening right now, like yesterday or next week, is linked to children's vocabulary and later reading. You don't need special materials. These are conversations most families already have.",
     whyCredit: "Developed with the UNC Early Learning Lab.",
-    comingH: "Coming up",
-    comingP: "One focus at a time. Look for the letter on the sign at carline.",
-    thisWeek: "This week",
+    comingH: "All five READY ideas",
+    comingP: "Look for the letter on the sign at carline. Tap a letter to see that idea.",
+    thisWeek: "You are here",
     tagline: "Everyday talk gets kids READY.",
     footer: "Carolina Community Academy and the UNC Early Learning Lab. Questions? Ask your child's teacher.",
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
@@ -202,7 +206,7 @@ const T = {
            own: "“This weekend we're going to <mark>Tía's house</mark>. What do you think we'll do there?”",
            ownNote: "Any plan works. Tomorrow's lunch, a trip, a birthday, what happens after the holiday." },
       Y: { w: "You Can Make a Difference", short: "You can make a difference",
-           hero: "These two weeks, pick any READY idea and keep going.",
+           hero: "Pick any READY idea and keep going.",
            d: "The conversations you have with your child support their language and learning.",
            kind: "remember",
            t: ["There’s no “right” way to have these conversations. Follow what interests your child.", "Look for times you’re already together, such as in the car, at meals, or before bed."],
@@ -228,9 +232,9 @@ const T = {
     whyH: "Por qué importa",
     whyP: "Hablar de cosas que no están pasando ahora mismo, como el ayer o la próxima semana, está relacionado con el vocabulario de los niños y con la lectura más adelante. No necesita materiales especiales. Son conversaciones que la mayoría de las familias ya tienen.",
     whyCredit: "Desarrollado con el Early Learning Lab de UNC.",
-    comingH: "Lo que viene",
-    comingP: "Un enfoque a la vez. Busque la letra en el letrero a la hora de recoger.",
-    thisWeek: "Esta semana",
+    comingH: "Las cinco ideas de READY",
+    comingP: "Busque la letra en el letrero a la hora de recoger. Toque una letra para ver esa idea.",
+    thisWeek: "Está aquí",
     tagline: "Las conversaciones de cada día preparan a los niños.",
     footer: "Carolina Community Academy y el Early Learning Lab de UNC. ¿Preguntas? Hable con el maestro de su hijo.",
     months: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
@@ -268,7 +272,7 @@ const T = {
            own: "“Este fin de semana vamos a <mark>casa de la tía</mark>. ¿Qué crees que vamos a hacer allá?”",
            ownNote: "Cualquier plan sirve. El almuerzo de mañana, un viaje, un cumpleaños, qué pasa después de las fiestas." },
       Y: { w: "Usted puede hacer la diferencia", short: "Usted puede hacer la diferencia",
-           hero: "Estas dos semanas, escoja cualquier idea de READY y siga.",
+           hero: "Escoja cualquier idea de READY y siga.",
            d: "Las conversaciones que tiene con su hijo apoyan su lenguaje y aprendizaje.",
            kind: "remember",
            t: ["No hay una forma “correcta” de tener estas conversaciones. Siga lo que le interesa a su hijo.", "Busque momentos en que ya están juntos, como en el carro, en las comidas o antes de dormir."],
@@ -313,8 +317,9 @@ function render(){
   else { btn.removeAttribute("href"); btn.textContent=t.shareSoon; btn.setAttribute("aria-disabled","true"); }
 
   document.getElementById("coming").replaceChildren(...ORDER.map(k=>{
-    const r=el("div",null,"row"+(k===feat.k?" now":""));
-    r.append(el("div",k,"L"), el("div",t.L[k].short,"W"), el("div", k===feat.k ? t.thisWeek : "", "D"));
+    const r=el(k===feat.k?"div":"a",null,"row"+(k===feat.k?" now":""));
+    if (k!==feat.k) r.href=PAGES[k]+(lang==="es"?"#es":"");
+    r.append(el("div",k,"L"), el("div",t.L[k].short,"W"), el("div", k===feat.k ? t.thisWeek : "›", "D"));
     return r;
   }));
 }
